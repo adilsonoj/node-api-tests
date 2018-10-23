@@ -1,5 +1,6 @@
 const jwt  = require('jsonwebtoken');
-const secret = "995bf053c4694e1e353cfd42b94e4447";
+const auth  = require('../../config/auth');
+
 
 module.exports = (req, res, next)=> {
     //atributo autorizaçao do cabeçalho http
@@ -18,7 +19,7 @@ module.exports = (req, res, next)=> {
         if (!/Bearer$/i.test(scheme))
             return res.status(401).send({ error: 'Token malformatted'});
 
-    jwt.verify(token, secret, (err, decoded) => {
+    jwt.verify(token, auth.secret, (err, decoded) => {
         if(err) return res.status(401).send({ error: 'Token invalid'});
 
         //retorna o id para o controller
